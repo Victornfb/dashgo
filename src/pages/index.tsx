@@ -1,7 +1,9 @@
-import { Flex, Input, Button, Stack, FormLabel, InputGroup, InputRightElement, FormControl } from '@chakra-ui/react'
+import { Flex, Button, Stack, FormLabel, InputGroup, InputRightElement, FormControl } from '@chakra-ui/react'
 import { useState } from 'react'
+import { BiShowAlt, BiHide } from 'react-icons/bi'
+import { Input } from '../components/Form/Input'
 
-export default function Home() {
+export default function SignIn() {
   const [show, setShow] = useState(false)
   const handleClick = () => setShow(!show)
 
@@ -22,44 +24,17 @@ export default function Home() {
         flexDir="column"
       >
         <Stack spacing="4">
-          <FormControl>
-            <FormLabel htmlFor="email">E-mail</FormLabel>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              focusBorderColor='pink.500'
-              bgColor="gray.900"
-              variant="filled"
-              _hover={{
-                bgColor: 'gray.900'
-              }}
-              size="lg"
-            />
-          </FormControl>
+          <Input
+            type="email"
+            name="email"
+            label="E-mail"
+          />
 
-          <FormControl>
-            <FormLabel htmlFor="password">Senha</FormLabel>
-            <InputGroup size='lg'>
-              <Input
-                id="password"
-                name="password"
-                type={show ? 'text' : 'password'}
-                focusBorderColor='pink.500'
-                bgColor="gray.900"
-                variant="filled"
-                _hover={{
-                  bgColor: 'gray.900'
-                }}
-                size="lg"
-              />
-              <InputRightElement width='4.5rem' marginRight="4">
-                <Button h='1.75rem' size='sm' onClick={handleClick} bgColor='pink.500'>
-                  {show ? 'Esconder' : 'Mostrar'}
-                </Button>
-              </InputRightElement>
-            </InputGroup>
-          </FormControl>
+          <Input
+            type="password"
+            name="password"
+            label="Senha"
+          />
         </Stack>
 
         <Button type="submit" mt="6" colorScheme="pink" size="lg">Entrar</Button>
