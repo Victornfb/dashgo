@@ -64,15 +64,13 @@ export default function Header() {
           <Icon as={RiUserAddLine} fontSize="20"/>
         </HStack>
 
-        <Flex
-          align="center"
-        >
+        <Flex align="center">
           <Box mr="4" textAlign="right">
             <Text>Victor Nunes</Text>
             <Text color="gray.300" fontSize="small">victornfb@outlook.com</Text>
           </Box>
 
-          <Avatar size="md" name="Victor Nunes"/>
+          <Avatar size="md" name="Victor Nunes" src="https://github.com/Victornfb.png"/>
         </Flex>
       </Flex>
     </Flex>

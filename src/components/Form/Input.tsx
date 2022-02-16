@@ -36,7 +36,7 @@ export function Input({ name, label, type, ...rest }: InputProps) {
           </InputRightElement>
         </InputGroup>
       :
-        <ChakraInput
+        <ChakraInput 
           id={name}
           name={name}
           focusBorderColor='pink.500'

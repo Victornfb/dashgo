@@ -1,11 +1,7 @@
 import { Flex, Button, Stack, FormLabel, InputGroup, InputRightElement, FormControl } from '@chakra-ui/react'
-import { useState } from 'react'
-import { BiShowAlt, BiHide } from 'react-icons/bi'
 import { Input } from '../components/Form/Input'
 
 export default function SignIn() {
-  const [show, setShow] = useState(false)
-  const handleClick = () => setShow(!show)
 
   return (
     <Flex
