@@ -66,7 +66,7 @@ const series = [
   }
 ]
 
-export default function Dashboar() {
+export default function Dashboard() {
   return (
     <Flex direction="column" h="100vh">
       <Header/>
@@ -76,22 +76,21 @@ export default function Dashboar() {
 
         <SimpleGrid flex="1" gap="4" minChildWidth="320px" align="flex-start">
           <Box
-            p="8"
+            p={["6","8"]}
             bgColor="gray.800"
             borderRadius="8"
-            // pb="4"
           >
             <Text fontSize="lg" mb="4">Inscritos da semana</Text>
             <Chart options={options} series={series} type="area" height={200} />
           </Box>
 
           <Box
-            p="8"
+            p={["6","8"]}
             bgColor="gray.800"
             borderRadius="8"
-            // pb="4"
           >
             <Text fontSize="lg" mb="4">Taxa de abertura</Text>
+            <Chart options={options} series={series} type="area" height={200} />
           </Box>
         </SimpleGrid>
       </Flex>
