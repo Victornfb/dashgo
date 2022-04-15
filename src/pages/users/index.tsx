@@ -15,7 +15,7 @@ export default function UserList() {
 
   const isScreenLarge = useBreakpointValue({base: false, lg: true});
 
-  const handlePrefetchUser = async (userId) => {
+  const handlePrefetchUser = async (userId: string) => {
     await queryClient.prefetchQuery(['user', userId], async () => {
       const response = await api.get(`users/${userId}`)
 
