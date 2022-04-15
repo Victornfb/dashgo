@@ -1,11 +1,31 @@
 import Header from "../../components/Header";
 import { Sidebar } from "../../components/Sidebar";
-import { Box, Button, Checkbox, Flex, Heading, Icon, Table, Tbody, Td, Text, Th, Thead, Tr, useBreakpointValue } from "@chakra-ui/react";
+import { Box, Button, Checkbox, Flex, Heading, Icon, Spinner, Table, Tbody, Td, Text, Th, Thead, Tr, useBreakpointValue } from "@chakra-ui/react";
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
 import { Pagination } from "../../components/Pagination";
 import Link from "next/link";
+import { useQuery } from 'react-query';
 
 export default function UserList() {
+  const { data, isLoading, error } = useQuery('users', async () => {
+    const response = await fetch('http://localhost:3000/api/users')
+    const data = await response.json()
+    const users = await data.users.map(user => {
+      return {
+        id: user.id,
+        name: user.name,
+        email:user.email,
+        createdAt: new Date(user.created_at).toLocaleDateString('pt-BR', {
+          day: '2-digit',
+          month: 'long',
+          year: 'numeric',
+        }),
+      }
+    });
+
+    return users;
+  })
+
   const isScreenLarge = useBreakpointValue({base: false, lg: true})
 
   return (
@@ -33,96 +53,60 @@ export default function UserList() {
             </Link>
           </Flex>
 
-          <Table colorScheme="whiteAlpha">
-            <Thead>
-              <Tr>
-                <Th px={["4","4","6"]} color="gray.300" w="8">
-                  <Checkbox colorScheme="pink" />
-                </Th>
-                <Th>Usuário</Th>
-                {isScreenLarge && <Th>Data de cadastro</Th>}
-                <Th width="8"></Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              <Tr>
-                <Td px={["4","4","6"]} color="gray.300" w="8">
-                  <Checkbox colorScheme="pink" />
-                </Td>
-                <Td>
-                  <Box>
-                    <Text fontWeight="bold">Victor Nunes</Text>
-                    <Text fontSize="sm" color="gray.300">victornfb@outlook.com</Text>
-                  </Box>
-                </Td>
-                {isScreenLarge && <Td>07 de Fevereiro, 2022</Td>}
-                <Td px="2">
-                  <Button
-                    as="a"
-                    size="sm"
-                    fontSize="sm"
-                    colorScheme="blackAlpha"
-                    leftIcon={<Icon as={RiPencilLine} fontSize="16" ms="0.5rem" />}
-                    cursor="pointer"
-                  >
-                    {isScreenLarge && (`${'Editar'}`)}
-                  </Button>
-                </Td>
-              </Tr>
+          { isLoading ? (
+            <Flex justify="center">
+              <Spinner/>
+            </Flex>
+          ) : error ? (
+            <Flex justify="center">
+              <Text>Nenhum dado encontrado.</Text>
+            </Flex>
+          ) : (
+            <>
+              <Table colorScheme="whiteAlpha">
+                <Thead>
+                  <Tr>
+                    <Th px={["4","4","6"]} color="gray.300" w="8">
+                      <Checkbox colorScheme="pink" />
+                    </Th>
+                    <Th>Usuário</Th>
+                    {isScreenLarge && <Th>Data de cadastro</Th>}
+                    <Th></Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {data.map((user) => (
+                    <Tr key={user.id}>
+                      <Td px={["4","4","6"]} color="gray.300" w="8">
+                        <Checkbox colorScheme="pink" />
+                      </Td>
+                      <Td>
+                        <Box>
+                          <Text fontWeight="bold">{user.name}</Text>
+                          <Text fontSize="sm" color="gray.300">{user.email}</Text>
+                        </Box>
+                      </Td>
+                      {isScreenLarge && <Td>{user.createdAt}</Td>}
+                      <Td px="2">
+                        <Button
+                          as="a"
+                          size="sm"
+                          fontSize="sm"
+                          colorScheme="blackAlpha"
+                          leftIcon={<Icon as={RiPencilLine} fontSize="16" ms="0.5rem" />}
+                          cursor="pointer"
+                        >
+                          {isScreenLarge && (`${'Editar'}`)}
+                        </Button>
+                      </Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
 
-              <Tr>
-                <Td px={["4","4","6"]} color="gray.300" w="8">
-                  <Checkbox colorScheme="pink" />
-                </Td>
-                <Td>
-                  <Box>
-                    <Text fontWeight="bold">Victor Nunes</Text>
-                    <Text fontSize="sm" color="gray.300">victornfb@outlook.com</Text>
-                  </Box>
-                </Td>
-                {isScreenLarge && <Td>07 de Fevereiro, 2022</Td>}
-                <Td px="2">
-                <Button
-                  as="a"
-                  size="sm"
-                  fontSize="sm"
-                  colorScheme="blackAlpha"
-                  leftIcon={<Icon as={RiPencilLine} fontSize="16" ms="0.5rem" />}
-                  cursor="pointer"
-                  >
-                    {isScreenLarge && (`${'Editar'}`)}
-                  </Button>
-                </Td>
-              </Tr>
-
-              <Tr>
-                <Td px={["4","4","6"]} color="gray.300" w="8">
-                  <Checkbox colorScheme="pink" />
-                </Td>
-                <Td>
-                  <Box>
-                    <Text fontWeight="bold">Victor Nunes</Text>
-                    <Text fontSize="sm" color="gray.300">victornfb@outlook.com</Text>
-                  </Box>
-                </Td>
-                {isScreenLarge && <Td>07 de Fevereiro, 2022</Td>}
-                <Td px="2">
-                <Button
-                  as="a"
-                  size="sm"
-                  fontSize="sm"
-                  colorScheme="blackAlpha"
-                  leftIcon={<Icon as={RiPencilLine} fontSize="16" ms="0.5rem" />}
-                  cursor="pointer"
-                  >
-                    {isScreenLarge && (`${'Editar'}`)}
-                  </Button>
-                </Td>
-              </Tr>
-            </Tbody>
-          </Table>
-
-          <Pagination />
+              <Pagination />
+            </>
+          )}
         </Box>
       </Flex>
     </Box>
