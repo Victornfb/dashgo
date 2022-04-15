@@ -24,7 +24,10 @@ export default function UserList() {
     });
 
     return users;
+  }, {
+    staleTime: 1000 * 5,
   })
+  console.log(data)
 
   const isScreenLarge = useBreakpointValue({base: false, lg: true})
 
