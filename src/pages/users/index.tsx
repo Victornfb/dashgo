@@ -4,30 +4,10 @@ import { Box, Button, Checkbox, Flex, Heading, Icon, Spinner, Table, Tbody, Td, 
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
 import { Pagination } from "../../components/Pagination";
 import Link from "next/link";
-import { useQuery } from 'react-query';
+import { useUsers } from "../../hooks/useUsers";
 
 export default function UserList() {
-  const { data, isLoading, error } = useQuery('users', async () => {
-    const response = await fetch('http://localhost:3000/api/users')
-    const data = await response.json()
-    const users = await data.users.map(user => {
-      return {
-        id: user.id,
-        name: user.name,
-        email:user.email,
-        createdAt: new Date(user.created_at).toLocaleDateString('pt-BR', {
-          day: '2-digit',
-          month: 'long',
-          year: 'numeric',
-        }),
-      }
-    });
-
-    return users;
-  }, {
-    staleTime: 1000 * 5,
-  })
-  console.log(data)
+  const { data, isLoading, isFetching, error } = useUsers()
 
   const isScreenLarge = useBreakpointValue({base: false, lg: true})
 
@@ -40,7 +20,10 @@ export default function UserList() {
 
         <Box flex="1" borderRadius="8" bgColor="gray.800" p="8">
           <Flex mb="8" justifyContent="space-between" align="center">
-            <Heading as="h2" size="lg" fontWeight="normal">Usuários</Heading>
+            <Heading as="h2" size="lg" fontWeight="normal">
+              Usuários
+              {!isLoading && isFetching && <Spinner size="sm" color="gray.500" ml="4"/> }
+            </Heading>
 
             <Link href="/users/create" passHref>
               <Button
